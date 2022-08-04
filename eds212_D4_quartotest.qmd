@@ -5,23 +5,33 @@ format: html
 editor: visual
 ---
 
-## Quarto
+## Leslie Matrix Example
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+Matrix model of population changes using the example we have from lecture.
 
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+Note: "Render" is the same as "knitr" 
 
 ```{r}
-1 + 1
+insect_leslie <- matrix(
+  data = c(0, 0, 600, 0.2, 0, 0, 0, 0.08, 0), 
+  nrow = 3, ncol = 3, byrow = TRUE)
+
 ```
 
-You can add options to executable code like this
+Create initial conditions to do matrix multiplication
+```{r}
+insect_y0 <- c(12000, 700, 500)
+
+# the operator %*% means dot product and matrix multiplication
+insect_y1 <- insect_leslie %*% insect_y0
+
+```
+
+Estimate populations at each life stage at year 2 and 3
 
 ```{r}
-#| echo: false
-2 * 2
+insect_y2 <- insect_leslie %*% insect_y1
+
+insect_y3 <- insect_leslie %*% insect_y2
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
